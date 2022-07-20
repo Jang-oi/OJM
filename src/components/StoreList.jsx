@@ -27,8 +27,8 @@ const StoreList = ({coords}) => {
 
     return (
         <Grid container>
-            {store.map((storeObj, index) => (
-                <Grid item lg={3} md={4} sm={6} xs={12} mt={4} key={index}>
+            {store.map((storeObj) => (
+                <Grid item lg={3} md={4} sm={6} xs={12} mt={4} key={storeObj.storeKey}>
                     <Card sx={{maxWidth: 400}}>
                         <CardMedia
                             component="img"

@@ -50,7 +50,7 @@ const Main = () => {
     return (
         <Container>
             <Weather coords={coords}/>
-            <StoreList coords={coords}/>
+            {/*<StoreList coords={coords}/>*/}
         </Container>
     )
 }
