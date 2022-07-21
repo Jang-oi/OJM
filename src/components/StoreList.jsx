@@ -26,10 +26,10 @@ const StoreList = ({coords}) => {
     }, [coords, getStoreList]);
 
     return (
-        <Grid container>
+        <Grid container spacing={4} mt={5}>
             {store.map((storeObj) => (
-                <Grid item lg={3} md={4} sm={6} xs={12} mt={4} key={storeObj.storeKey}>
-                    <Card sx={{maxWidth: 400}}>
+                <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={storeObj.storeKey}>
+                    <Card sx={{maxWidth: 300}}>
                         <CardMedia
                             component="img"
                             height="200"

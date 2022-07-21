@@ -4,10 +4,10 @@ import {Container} from "@mui/material";
 // 컴포넌트
 import StoreList from "../components/StoreList";
 import Weather from "../components/Weather";
+import Filter from "../components/Filter";
 
 const Main = () => {
     const [coords, setCoords] = useState({latitude: 0, longitude: 0});
-
     /**
      * Geolocation API 가 정상적으로 동작 했을 때 콜백 함수
      * @param position
@@ -48,9 +48,10 @@ const Main = () => {
     }, []);
 
     return (
-        <Container>
+        <Container fixed style={{marginTop: 50}}>
             <Weather coords={coords}/>
-            {/*<StoreList coords={coords}/>*/}
+            <Filter/>
+            <StoreList coords={coords}/>
         </Container>
     )
 }

@@ -1,10 +1,9 @@
 import './App.css';
-import {useState} from "react";
+import {Fragment, useState} from "react";
 import axios from "axios";
 
 import {Route, Routes} from "react-router-dom";
 // MUI
-import {Container} from "@mui/material";
 // 컴포넌트
 import Loading from "./components/Loading";
 // 페이지
@@ -39,12 +38,12 @@ const App = () => {
   )
 
   return (
-      <Container>
+      <Fragment>
         {loading && <Loading/>}
         <Routes>
           <Route path="/" element={<Main/>}/>
         </Routes>
-      </Container>
+      </Fragment>
   );
 }
 
