@@ -9,12 +9,13 @@ import {
     ListItem,
     ListItemText, MenuItem, OutlinedInput, Select,
 } from "@mui/material";
+import {storeCategoryList} from "../utils/Setting";
 
 const Filter = () => {
 
-    const [anchorState, setAnchorState] = useState({right: false});
+    // anchor 값 top, bottom, left, right 로 위치 조정 가능
     const anchor = 'right';
-    const categoryList = ['전체', '한식', '일식', '중식', '아시아 음식', '뷔폐', '분식', '카페', '기타'];
+    const [anchorState, setAnchorState] = useState({[anchor]: false});
 
     /**
      * 토글 열고 닫고에 대한 함수
@@ -37,8 +38,7 @@ const Filter = () => {
         },
     };
 
-
-    function getStyles(name, personName, theme) {
+    const getStyles = (name, personName, theme) => {
         return {
             fontWeight:
                 personName.indexOf(name) === -1
@@ -52,8 +52,8 @@ const Filter = () => {
         const [personName, setPersonName] = useState([]);
 
         const handleChange = (event) => {
-            const {target: {value}} = event;
-            setPersonName(typeof value === 'string' ? value.split(',') : value);
+            const {value} = event.target;
+            setPersonName(value);
         };
 
         return (
@@ -61,28 +61,26 @@ const Filter = () => {
                 <FormControl sx={{m: 1, width: 350}}>
                     <InputLabel>음식 종류</InputLabel>
                     <Select
-                        labelId="demo-multiple-chip-label"
-                        id="demo-multiple-chip"
                         multiple
                         value={personName}
                         onChange={handleChange}
                         input={<OutlinedInput label="음식 종류"/>}
                         renderValue={(selected) => (
                             <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
-                                {selected.map((value) => (
-                                    <Chip key={value} label={value}/>
+                                {selected.map((selObj) => (
+                                    <Chip key={selObj.code} label={selObj.name}/>
                                 ))}
                             </Box>
                         )}
                         MenuProps={MenuProps}
                     >
-                        {categoryList.map((name) => (
+                        {storeCategoryList.map((listObj) => (
                             <MenuItem
-                                key={name}
-                                value={name}
-                                style={getStyles(name, personName, theme)}
+                                key={listObj.code}
+                                value={listObj}
+                                style={getStyles(listObj.name, personName, theme)}
                             >
-                                {name}
+                                {listObj.name}
                             </MenuItem>
                         ))}
                     </Select>
@@ -93,15 +91,12 @@ const Filter = () => {
 
     /**
      * 필터 토글안에 리스트에 대한 함수
-     * @param anchor
      * @returns {JSX.Element}
      */
-    const list = (anchor) => (
+    const list = () => (
         <Box
             sx={{width: 400, marginTop: 15}}
             role="presentation"
-            // onClick={toggleDrawer(anchor, false)}
-            // onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
                 <ListItem>
@@ -113,11 +108,7 @@ const Filter = () => {
                 <ListItem>
                     {MultiSelect()}
                 </ListItem>
-{/*                <ListItem>
-                    {MultiSelect()}
-                </ListItem>*/}
             </List>
-
             <Button>적용</Button>
             <Button>취소</Button>
         </Box>
@@ -131,7 +122,7 @@ const Filter = () => {
                 open={anchorState[anchor]}
                 onClose={toggleDrawer(anchor, false)}
             >
-                {list(anchor)}
+                {list()}
             </Drawer>
         </Fragment>
     );

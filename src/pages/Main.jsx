@@ -50,10 +50,10 @@ const Main = () => {
     return (
         <Container fixed style={{marginTop: 50}}>
             <Container style={{display: 'flex', justifyContent: 'space-between'}}>
-                <Weather coords={coords}/>
+                {/*<Weather coords={coords}/>*/}
                 <Filter/>
             </Container>
-            <StoreList coords={coords}/>
+            {/*<StoreList coords={coords}/>*/}
         </Container>
     )
 }
