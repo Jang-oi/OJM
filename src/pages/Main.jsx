@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 // MUI
 import {Container} from "@mui/material";
 // 컴포넌트
@@ -12,10 +12,10 @@ const Main = () => {
      * Geolocation API 가 정상적으로 동작 했을 때 콜백 함수
      * @param position
      */
-    const geoSuccessCallBack = (position) => {
+    const geoSuccessCallBack = useCallback(async (position) => {
         const {latitude, longitude} = position.coords;
-        setCoords({latitude : latitude, longitude : longitude});
-    }
+        setCoords((prevObj) => ({...prevObj, latitude: latitude, longitude: longitude}));
+    }, []);
 
     /**
      * Geolocation API 가 정상적으로 동작 하지 않은 경우 콜백 함수
@@ -45,12 +45,14 @@ const Main = () => {
         } else {
             alert("사용자의 웹 브라우저가 Geolocation API를 지원하지 않습니다.");
         }
-    }, []);
+    }, [geoSuccessCallBack]);
 
     return (
         <Container fixed style={{marginTop: 50}}>
-            <Weather coords={coords}/>
-            <Filter/>
+            <Container style={{display: 'flex', justifyContent: 'space-between'}}>
+                <Weather coords={coords}/>
+                <Filter/>
+            </Container>
             <StoreList coords={coords}/>
         </Container>
     )
