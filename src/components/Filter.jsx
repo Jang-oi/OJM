@@ -1,5 +1,4 @@
 import {Fragment, useState} from "react";
-import {useTheme} from '@mui/material/styles';
 import {
     Box,
     Button, Chip,
@@ -16,6 +15,7 @@ const Filter = () => {
     // anchor 값 top, bottom, left, right 로 위치 조정 가능
     const anchor = 'right';
     const [anchorState, setAnchorState] = useState({[anchor]: false});
+    const [filterCategory, setFilterCategory] = useState([]);
 
     /**
      * 토글 열고 닫고에 대한 함수
@@ -27,33 +27,26 @@ const Filter = () => {
         setAnchorState({...anchorState, [anchor]: open});
     };
 
-    const ITEM_HEIGHT = 48;
-    const ITEM_PADDING_TOP = 8;
-    const MenuProps = {
-        PaperProps: {
-            style: {
-                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                width    : 300,
-            },
-        },
-    };
-
-    const getStyles = (name, personName, theme) => {
-        return {
-            fontWeight:
-                personName.indexOf(name) === -1
-                    ? theme.typography.fontWeightRegular
-                    : theme.typography.fontWeightMedium,
-        };
-    }
-
+    /**
+     * MultiSelect 하는 부분의 컴포넌트
+     * @returns {JSX.Element}
+     * @constructor
+     */
     const MultiSelect = () => {
-        const theme = useTheme();
-        const [personName, setPersonName] = useState([]);
+        const ITEM_HEIGHT = 48;
+        const ITEM_PADDING_TOP = 8;
+        const MenuProps = {
+            PaperProps: {
+                style: {
+                    maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                    width    : 300,
+                },
+            },
+        };
 
         const handleChange = (event) => {
             const {value} = event.target;
-            setPersonName(value);
+            setFilterCategory(value);
         };
 
         return (
@@ -62,7 +55,8 @@ const Filter = () => {
                     <InputLabel>음식 종류</InputLabel>
                     <Select
                         multiple
-                        value={personName}
+                        value={filterCategory}
+                        name={'category'}
                         onChange={handleChange}
                         input={<OutlinedInput label="음식 종류"/>}
                         renderValue={(selected) => (
@@ -78,7 +72,6 @@ const Filter = () => {
                             <MenuItem
                                 key={listObj.code}
                                 value={listObj}
-                                style={getStyles(listObj.name, personName, theme)}
                             >
                                 {listObj.name}
                             </MenuItem>
@@ -88,6 +81,10 @@ const Filter = () => {
             </div>
         );
     }
+
+    const onApply = () => {
+        console.log(filterCategory);
+    };
 
     /**
      * 필터 토글안에 리스트에 대한 함수
@@ -109,8 +106,8 @@ const Filter = () => {
                     {MultiSelect()}
                 </ListItem>
             </List>
-            <Button>적용</Button>
-            <Button>취소</Button>
+            <Button onClick={onApply}>적용</Button>
+            <Button onClick={toggleDrawer(anchor, false)}>취소</Button>
         </Box>
     );
 
