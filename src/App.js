@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import axios from 'axios';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MainPage from './pages/MainPage';
+import StorePage from './pages/StorePage';
+import { CoordsProvider } from './contexts/coordsContext';
+import { StoreProvider } from './contexts/storeContext';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    axios.defaults.baseURL = process.env.REACT_APP_BACK_URL;
+
+    return (
+        <CoordsProvider>
+            <StoreProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<MainPage />} />
+                        <Route path="/store" element={<StorePage />} />
+                    </Routes>
+                </BrowserRouter>
+            </StoreProvider>
+        </CoordsProvider>
+    );
+};
 
 export default App;
