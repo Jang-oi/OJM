@@ -74,6 +74,10 @@ const StoreList = () => {
         getStore(storeDispatch, coords);
     }, [coords, storeDispatch]);
     if (!store) return null;
+    if (store.length === 0) {
+        return <div>선택된 가게가 없습니다. 필터링 변경, 위치 변경을 해주세요</div>
+    }
+
     return (
         <Fragment>
             {store.map(
