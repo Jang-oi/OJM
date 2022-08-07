@@ -27,9 +27,7 @@ export const CoordsProvider = ({ children }) => {
     const [state, dispatch] = useReducer(coordsReducer, initialState);
     return (
         <CoordsStateContext.Provider value={state}>
-            <CoordsDispatchContext.Provider value={dispatch}>
-                {children}
-            </CoordsDispatchContext.Provider>
+            <CoordsDispatchContext.Provider value={dispatch}>{children}</CoordsDispatchContext.Provider>
         </CoordsStateContext.Provider>
     );
 };

@@ -30,9 +30,7 @@ const StorePage = () => {
 
     return (
         <Container style={{ marginTop: 50 }}>
-            <Container
-                style={{ display: 'flex', justifyContent: 'space-between' }}
-            >
+            <Container style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <WeatherWidget />
                 <FilterTemplate />
             </Container>

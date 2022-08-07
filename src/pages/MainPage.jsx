@@ -29,14 +29,10 @@ const MainPage = () => {
     const geoErrCallBack = useCallback((error) => {
         switch (error.code) {
             case 1:
-                alert(
-                    '위치 허용이 거부 되었습니다. 허용 후 새로고침 부탁드립니다.',
-                );
+                alert('위치 허용이 거부 되었습니다. 허용 후 새로고침 부탁드립니다.');
                 break;
             case 2:
-                alert(
-                    '현재 위치정보를 찾을 수 없는 곳에 있어 서비스 이용이 불가합니다.',
-                );
+                alert('현재 위치정보를 찾을 수 없는 곳에 있어 서비스 이용이 불가합니다.');
                 break;
             default:
                 break;
@@ -45,27 +41,17 @@ const MainPage = () => {
 
     useEffect(() => {
         if (!navigator.geolocation) {
-            alert(
-                '사용자의 웹 브라우저의 버전이 낮아 서비스의 이용이 불가합니다.',
-            );
+            alert('사용자의 웹 브라우저의 버전이 낮아 서비스의 이용이 불가합니다.');
         }
-        navigator.geolocation.getCurrentPosition(
-            geoSuccessCallBack,
-            geoErrCallBack,
-            {
-                enableHighAccuracy: true,
-                timeout: 5000,
-                maximumAge: 0,
-            },
-        );
+        navigator.geolocation.getCurrentPosition(geoSuccessCallBack, geoErrCallBack, {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0,
+        });
     }, [geoErrCallBack, geoSuccessCallBack]);
 
     if (isEmptyObj(coordsState.coords))
-        return (
-            <LocationTemplate
-                element={'위치를 허용 해주세요. 디자인 추가 할 예정.'}
-            />
-        );
+        return <LocationTemplate element={'위치를 허용 해주세요. 디자인 추가 할 예정.'} />;
 
     return <LocationTemplate element={<LocationMapTemplate />} />;
 };

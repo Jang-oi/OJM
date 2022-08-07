@@ -1,12 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-} from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useCoordsDispatch, useCoordsState } from '../contexts/coordsContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,8 +27,7 @@ const MapContainer = ({ setCoords }) => {
             });
             marker.setMap(map);
 
-            const iwContent =
-                '<div style="padding:5px;">현재 위치입니다.</div>';
+            const iwContent = '<div style="padding:5px;">현재 위치입니다.</div>';
 
             const infoWindow = new kakao.maps.InfoWindow({
                 position: new kakao.maps.LatLng(latitude, longitude),
@@ -100,12 +92,9 @@ const LocationMapTemplate = () => {
 
     return (
         <Dialog open={openDialog}>
-            <DialogTitle>변경할 위치를 클릭해주세요.</DialogTitle>
+            <DialogTitle>위치를 클릭해주세요.</DialogTitle>
             <DialogContent>
-                <DialogContentText>
-                    현재 위치가 아닐 경우 지도를 클릭하여 적용 버튼을
-                    클릭해주세요.
-                </DialogContentText>
+                <DialogContentText>현재 위치가 아닐 경우 지도를 클릭하여 적용 버튼을 클릭해주세요.</DialogContentText>
                 <MapContainer setCoords={setCoords} />
             </DialogContent>
             <DialogActions>

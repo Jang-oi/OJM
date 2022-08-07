@@ -1,20 +1,8 @@
 import React, { useEffect, Fragment } from 'react';
 import { useCoordsState } from '../contexts/coordsContext';
 import { isEmptyObj } from '../utils/common';
-import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    CardMedia,
-    Grid,
-    Typography,
-} from '@mui/material';
-import {
-    getStore,
-    useStoreDispatch,
-    useStoreState,
-} from '../contexts/storeContext';
+import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { getStore, useStoreDispatch, useStoreState } from '../contexts/storeContext';
 import storeDefaultImg from '../assets/img/storeDefaultImg.jpg';
 
 /**
@@ -30,19 +18,9 @@ const StoreItem = ({ storeKey, ThumUrl, name, category }) => {
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={storeKey}>
             <Card sx={{ maxWidth: 300 }}>
-                <CardMedia
-                    component="img"
-                    height="200"
-                    image={ThumUrl || storeDefaultImg}
-                    alt="storeThumbnail"
-                />
+                <CardMedia component="img" height="200" image={ThumUrl || storeDefaultImg} alt="storeThumbnail" />
                 <CardContent>
-                    <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="div"
-                        style={{ minHeight: 70 }}
-                    >
+                    <Typography gutterBottom variant="h5" component="div" style={{ minHeight: 70 }}>
                         {name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -75,22 +53,20 @@ const StoreList = () => {
     }, [coords, storeDispatch]);
     if (!store) return null;
     if (store.length === 0) {
-        return <div>선택된 가게가 없습니다. 필터링 변경, 위치 변경을 해주세요</div>
+        return <div>선택된 가게가 없습니다. 필터링 변경, 위치 변경을 해주세요</div>;
     }
 
     return (
         <Fragment>
-            {store.map(
-                ({ storeKey, storeThumUrl, storeCategory, storeName }) => (
-                    <StoreItem
-                        key={storeKey}
-                        id={storeKey}
-                        ThumUrl={storeThumUrl}
-                        category={storeCategory}
-                        name={storeName}
-                    />
-                ),
-            )}
+            {store.map(({ storeKey, storeThumUrl, storeCategory, storeName }) => (
+                <StoreItem
+                    key={storeKey}
+                    id={storeKey}
+                    ThumUrl={storeThumUrl}
+                    category={storeCategory}
+                    name={storeName}
+                />
+            ))}
         </Fragment>
     );
 };

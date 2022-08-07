@@ -48,8 +48,7 @@ const WeatherWidget = () => {
      * @returns {JSX.Element}
      */
     const selectIcon = () => {
-        const iconId =
-            weather.id === 800 ? 9 : (parseInt(weather.id) / 100).toFixed(0);
+        const iconId = weather.id === 800 ? 9 : (parseInt(weather.id) / 100).toFixed(0);
         switch (iconId) {
             case '9':
                 return <TiWeatherSunny size="3rem" color="red" />;
@@ -75,13 +74,9 @@ const WeatherWidget = () => {
         (coords) => {
             try {
                 const geocoder = new kakao.maps.services.Geocoder();
-                geocoder.coord2RegionCode(
-                    coords.longitude,
-                    coords.latitude,
-                    (result) => {
-                        setAddress(result[0].address_name);
-                    },
-                );
+                geocoder.coord2RegionCode(coords.longitude, coords.latitude, (result) => {
+                    setAddress(result[0].address_name);
+                });
             } catch (e) {
                 alert(e);
             }
@@ -96,7 +91,7 @@ const WeatherWidget = () => {
     }, [coords, getWeather, getAddress]);
 
     return (
-        <div style={{ background: 'greenyellow'}}>
+        <div style={{ background: 'greenyellow' }}>
             <p>배경색은 구분을 위해</p>
             {weather.temperature}℃{selectIcon()}
             {weather.main}
