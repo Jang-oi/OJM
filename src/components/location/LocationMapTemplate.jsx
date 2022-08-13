@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { useCoordsDispatch, useCoordsState } from '../contexts/coordsContext';
+import { useCoordsDispatch, useCoordsState } from '../../contexts/coordsContext';
 import { useNavigate } from 'react-router-dom';
+import { useStoreDispatch } from '../../contexts/storeContext';
+import { useFilterDispatch } from '../../contexts/filterContext';
 
 const MapContainer = ({ setCoords }) => {
     const style = {
@@ -63,6 +65,9 @@ const LocationMapTemplate = () => {
     const coordsState = useCoordsState();
     const coordsDispatch = useCoordsDispatch();
 
+    const storeDispatch = useStoreDispatch();
+    const filterDispatch = useFilterDispatch();
+
     const navigate = useNavigate();
     const initCoords = coordsState.coords;
     const coords = useRef(initCoords);
@@ -87,6 +92,8 @@ const LocationMapTemplate = () => {
             coords: coords.current,
         });
         setOpenDialog(false);
+        filterDispatch({ type: 'INIT_FILTER' });
+        storeDispatch({ type: 'SET_STORE_DIALOG', isStoreDialog: true });
         navigate('/store');
     };
 

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { Container } from '@mui/material';
-import WeatherWidget from '../components/WeatherWidget';
-import FilterTemplate from '../components/FilterTemplate';
+import WeatherWidget from '../components/weather/WeatherWidget';
+import FilterTemplate from '../components/store/FilterTemplate';
 import { useCoordsDispatch, useCoordsState } from '../contexts/coordsContext';
 import { useNavigate } from 'react-router-dom';
 import { isEmptyObj } from '../utils/common';
-import StoreTemplate from '../components/StoreTemplate';
+import StoreTemplate from '../components/store/StoreTemplate';
+import StoreSelectTemplate from '../components/store/StoreSelectTemplate';
 
 const StorePage = () => {
     const coordsState = useCoordsState();
@@ -30,9 +31,10 @@ const StorePage = () => {
 
     return (
         <Container style={{ marginTop: 50 }}>
+            <StoreSelectTemplate />
             <Container style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <WeatherWidget />
                 <FilterTemplate />
+                <WeatherWidget />
             </Container>
             <StoreTemplate />
         </Container>

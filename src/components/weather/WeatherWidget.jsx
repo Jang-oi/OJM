@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useCoordsState } from '../contexts/coordsContext';
+import { useCoordsState } from '../../contexts/coordsContext';
 import axios from 'axios';
 import {
     TiWeatherSunny,
@@ -10,7 +10,8 @@ import {
     TiWeatherSnow,
 } from 'react-icons/ti';
 import { BsCloudFog } from 'react-icons/bs';
-import { isEmptyObj } from '../utils/common';
+import { isEmptyObj } from '../../utils/common';
+import { Container } from "@mui/material";
 
 const WeatherWidget = () => {
     const [weather, setWeather] = useState({
@@ -91,13 +92,13 @@ const WeatherWidget = () => {
     }, [coords, getWeather, getAddress]);
 
     return (
-        <div style={{ background: 'greenyellow' }}>
+        <Container style={{ background: 'greenyellow' }}>
             <p>배경색은 구분을 위해</p>
             {weather.temperature}℃{selectIcon()}
             {weather.main}
             <p />
             현재 위치 : {address}
-        </div>
+        </Container>
     );
 };
 

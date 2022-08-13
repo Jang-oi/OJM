@@ -1,14 +1,13 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useCoordsDispatch } from '../contexts/coordsContext';
-import LocationMapTemplate from '../components/LocationMapTemplate';
-import LocationTemplate from '../components/LocationTemplate';
+import LocationTemplate from '../components/location/LocationTemplate';
 
 const MainPage = () => {
     const coordsDispatch = useCoordsDispatch();
 
-    const [coordsError, coordsSetError] = useState({
-        msg: '',
-        state: false,
+    const [locationState, setLocationState] = useState({
+        element: '',
+        isLocationCheck: false,
     });
 
     /**
@@ -16,7 +15,7 @@ const MainPage = () => {
      * @param obj
      */
     const coordsErrorHandler = (obj) => {
-        coordsSetError((pervObj) => {
+        setLocationState((pervObj) => {
             return {
                 ...pervObj,
                 ...obj,
@@ -29,10 +28,11 @@ const MainPage = () => {
      */
     const geoSuccessCallBack = useCallback(
         async (position) => {
-            coordsErrorHandler({ msg: '', state: false });
+            const localCoords = JSON.parse(localStorage.coords).coords;
+            coordsErrorHandler({ element: '', isLocationCheck: true });
             coordsDispatch({
                 type: 'SET_COORDS',
-                coords: position.coords,
+                coords: localCoords || position.coords,
             });
         },
         [coordsDispatch],
@@ -45,12 +45,15 @@ const MainPage = () => {
     const geoErrCallBack = useCallback((error) => {
         switch (error.code) {
             case 1:
-                coordsErrorHandler({ msg: '위치 허용이 거부 되었습니다. 허용 후 새로고침 부탁드립니다.', state: true });
+                coordsErrorHandler({
+                    element: `위치 허용이 거부 되었습니다. 허용 후 새로고침 부탁드립니다.`,
+                    isLocationCheck: false,
+                });
                 break;
             case 2:
                 coordsErrorHandler({
-                    msg: '현재 위치정보를 찾을 수 없는 곳에 있어 서비스 이용이 불가합니다.',
-                    state: true,
+                    element: '현재 위치정보를 찾을 수 없는 곳에 있어 서비스 이용이 불가합니다.',
+                    isLocationCheck: false,
                 });
                 break;
             default:
@@ -60,13 +63,13 @@ const MainPage = () => {
 
     useEffect(() => {
         coordsErrorHandler({
-            msg: '위치를 허용 해주세요. 디자인 추가 할 예정.',
-            state: true,
+            element: '위치를 허용 해주세요.',
+            isLocationCheck: false,
         });
         if (!navigator.geolocation) {
             coordsErrorHandler({
-                msg: '사용자의 웹 브라우저의 버전이 낮아 서비스의 이용이 불가합니다.',
-                state: true,
+                element: '사용자의 웹 브라우저의 버전이 낮아 서비스의 이용이 불가합니다.',
+                isLocationCheck: false,
             });
         }
         navigator.geolocation.getCurrentPosition(geoSuccessCallBack, geoErrCallBack, {
@@ -76,15 +79,7 @@ const MainPage = () => {
         });
     }, [geoErrCallBack, geoSuccessCallBack]);
 
-    return (
-        <Fragment>
-            {coordsError.state ? (
-                <LocationTemplate element={coordsError.msg} />
-            ) : (
-                <LocationTemplate element={<LocationMapTemplate />} />
-            )}
-        </Fragment>
-    );
+    return <LocationTemplate locationState={locationState} />;
 };
 
-export default React.memo(MainPage);
+export default MainPage;

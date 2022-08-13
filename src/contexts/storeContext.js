@@ -6,6 +6,7 @@ import { filterApply } from '../utils/common';
 const initialState = {
     totalStore: null,
     store: null,
+    isStoreDialog: true,
 };
 
 const storeReducer = (state, action) => {
@@ -25,6 +26,12 @@ const storeReducer = (state, action) => {
             return {
                 ...state,
                 store: action.data,
+                isStoreDialog: action.isStoreDialog,
+            };
+        case 'SET_STORE_DIALOG':
+            return {
+                ...state,
+                isStoreDialog: action.isStoreDialog,
             };
         default:
             throw new Error(`UnHandled action type : ${action.type}`);

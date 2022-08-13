@@ -1,9 +1,10 @@
 import React, { useEffect, Fragment } from 'react';
-import { useCoordsState } from '../contexts/coordsContext';
-import { isEmptyObj } from '../utils/common';
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
-import { getStore, useStoreDispatch, useStoreState } from '../contexts/storeContext';
-import storeDefaultImg from '../assets/img/storeDefaultImg.jpg';
+import { useCoordsState } from '../../contexts/coordsContext';
+import { isEmptyObj } from '../../utils/common';
+import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography } from '@mui/material';
+import { getStore, useStoreDispatch, useStoreState } from '../../contexts/storeContext';
+import storeDefaultImg from '../../assets/img/storeDefaultImg.jpg';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * 가게들을 카드형태로 보여주는 컴포넌트
@@ -29,7 +30,6 @@ const StoreItem = ({ storeKey, ThumUrl, name, category }) => {
                 </CardContent>
                 <CardActions>
                     <Button size="small">자세히 보기</Button>
-                    <Button size="small">길 찾기</Button>
                 </CardActions>
             </Card>
         </Grid>
@@ -48,12 +48,35 @@ const StoreList = () => {
     const storeDispatch = useStoreDispatch();
     const { store } = storeState;
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         getStore(storeDispatch, coords);
     }, [coords, storeDispatch]);
+
+    const onLocationChange = () => {
+        navigate('/');
+    };
+
     if (!store) return null;
     if (store.length === 0) {
-        return <div>선택된 가게가 없습니다. 필터링 변경, 위치 변경을 해주세요</div>;
+        return (
+            <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 20, pb: 6 }}>
+                <Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom>
+                    오늘 점심 뭐먹지
+                </Typography>
+                <Typography variant="h5" align="center" color="text.secondary" component="p">
+                    선택된 가게가 없습니다. 필터를 재 설정해주세요.
+                </Typography>
+                <div style={{ textAlign: 'center', marginTop: 30 }}>
+                    <Button onClick={onLocationChange}>
+                        <Typography variant="h5" align="center">
+                            위치 변경
+                        </Typography>
+                    </Button>
+                </div>
+            </Container>
+        );
     }
 
     return (
