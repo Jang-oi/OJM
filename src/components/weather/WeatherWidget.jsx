@@ -11,7 +11,8 @@ import {
 } from 'react-icons/ti';
 import { BsCloudFog } from 'react-icons/bs';
 import { isEmptyObj } from '../../utils/common';
-import { Container } from "@mui/material";
+import { Button, Container } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const WeatherWidget = () => {
     const [weather, setWeather] = useState({
@@ -23,6 +24,8 @@ const WeatherWidget = () => {
 
     const coordsState = useCoordsState();
     const { coords } = coordsState;
+
+    const navigate = useNavigate();
 
     /**
      * 좌표 값을 받아 날씨정보 가져오는 함수
@@ -93,11 +96,11 @@ const WeatherWidget = () => {
 
     return (
         <Container style={{ background: 'greenyellow' }}>
-            <p>배경색은 구분을 위해</p>
             {weather.temperature}℃{selectIcon()}
             {weather.main}
             <p />
             현재 위치 : {address}
+            <Button onClick={() => {navigate('/')}}>위치 변경</Button>
         </Container>
     );
 };

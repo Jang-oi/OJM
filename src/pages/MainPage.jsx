@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useCoordsDispatch } from '../contexts/coordsContext';
 import LocationTemplate from '../components/location/LocationTemplate';
+import { getLocalStorage } from '../utils/localStorage';
 
 const MainPage = () => {
     const coordsDispatch = useCoordsDispatch();
@@ -28,7 +29,7 @@ const MainPage = () => {
      */
     const geoSuccessCallBack = useCallback(
         async (position) => {
-            const localCoords = JSON.parse(localStorage.coords).coords;
+            const localCoords = getLocalStorage('coords');
             coordsErrorHandler({ element: '', isLocationCheck: true });
             coordsDispatch({
                 type: 'SET_COORDS',

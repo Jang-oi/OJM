@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { isEmptyObj } from '../utils/common';
 import StoreTemplate from '../components/store/StoreTemplate';
 import StoreSelectTemplate from '../components/store/StoreSelectTemplate';
+import { getLocalStorage } from "../utils/localStorage";
 
 const StorePage = () => {
     const coordsState = useCoordsState();
@@ -17,7 +18,7 @@ const StorePage = () => {
 
     useEffect(() => {
         if (isEmptyObj(coords)) {
-            const localCoords = JSON.parse(localStorage.coords).coords;
+            const localCoords = getLocalStorage(coords);
             if (!isEmptyObj(localCoords)) {
                 coordsDispatch({
                     type: 'SET_COORDS',
