@@ -3,6 +3,7 @@ import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import StorePage from './pages/StorePage';
+import StoreDetail from './pages/StoreDetail';
 import { CoordsProvider } from './contexts/coordsContext';
 import { StoreProvider } from './contexts/storeContext';
 import { FilterProvider } from './contexts/filterContext';
@@ -18,6 +19,7 @@ const App = () => {
                         <Routes>
                             <Route path="/" element={<MainPage />} />
                             <Route path="/store" element={<StorePage />} />
+                            <Route path="/store/:id" element={<StoreDetail />} />
                         </Routes>
                     </BrowserRouter>
                 </FilterProvider>

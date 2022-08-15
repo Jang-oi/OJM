@@ -15,7 +15,10 @@ import { useNavigate } from 'react-router-dom';
  * @returns {JSX.Element}
  * @constructor
  */
-const StoreItem = ({ storeKey, ThumUrl, name, category }) => {
+const StoreItem = ({ storeKey, ThumUrl, name, category, storeId }) => {
+
+    const navigate = useNavigate();
+
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={storeKey}>
             <Card sx={{ maxWidth: 300 }}>
@@ -29,7 +32,7 @@ const StoreItem = ({ storeKey, ThumUrl, name, category }) => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">자세히 보기</Button>
+                    <Button size="small" onClick={() => {navigate(`/store/${storeId}`)}}>자세히 보기</Button>
                 </CardActions>
             </Card>
         </Grid>
@@ -81,10 +84,10 @@ const StoreList = () => {
 
     return (
         <Fragment>
-            {store.map(({ storeKey, storeThumUrl, storeCategory, storeName }) => (
+            {store.map(({ storeKey, storeThumUrl, storeCategory, storeName, storeId }) => (
                 <StoreItem
                     key={storeKey}
-                    id={storeKey}
+                    storeId={storeId}
                     ThumUrl={storeThumUrl}
                     category={storeCategory}
                     name={storeName}

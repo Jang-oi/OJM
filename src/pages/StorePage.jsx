@@ -18,7 +18,7 @@ const StorePage = () => {
 
     useEffect(() => {
         if (isEmptyObj(coords)) {
-            const localCoords = getLocalStorage(coords);
+            const localCoords = getLocalStorage('coords');
             if (!isEmptyObj(localCoords)) {
                 coordsDispatch({
                     type: 'SET_COORDS',

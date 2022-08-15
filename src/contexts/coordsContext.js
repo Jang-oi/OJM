@@ -9,7 +9,7 @@ const coordsReducer = (state, action) => {
     switch (action.type) {
         case 'SET_COORDS':
             const { latitude, longitude } = action.coords;
-            setLocalStorage('coords', { coords: { latitude, longitude } });
+            setLocalStorage('coords', { latitude, longitude });
             return {
                 ...state,
                 coords: action.coords,
