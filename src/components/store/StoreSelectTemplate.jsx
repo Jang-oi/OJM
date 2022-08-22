@@ -2,11 +2,14 @@ import React from 'react';
 import { Button, Card, CardActions, CardContent, CardMedia, Dialog, DialogContent, Typography } from '@mui/material';
 import { useStoreDispatch, useStoreState } from '../../contexts/storeContext';
 import storeDefaultImg from '../../assets/img/storeDefaultImg.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const StoreSelectTemplate = () => {
     const storeState = useStoreState();
     const storeDispatch = useStoreDispatch();
     const { store, isStoreDialog } = storeState;
+
+    const navigate = useNavigate();
 
     const handleStoreDialogClose = () => {
         storeDispatch({ type: 'SET_STORE_DIALOG', isStoreDialog: false });
@@ -15,16 +18,15 @@ const StoreSelectTemplate = () => {
     if (!isStoreDialog) return null;
     const selectStoreIndex = Math.floor(Math.random() * store.length);
 
-    const { storeThumUrl, storeTel, storeName, storeId, storeDistance, storeBizhourInfo, storeAddress } =
-        store[selectStoreIndex];
+    const { storeThumUrl, storeTel, storeName, storeId, storeDistance, storeAddress } = store[selectStoreIndex];
 
     return (
         <Dialog open={isStoreDialog} onClose={handleStoreDialogClose} fullWidth={true} maxWidth={'lg'}>
             <DialogContent>
-                <Card sx={{ height: 1000 }}>
+                <Card sx={{ height: '100%' }}>
                     <CardMedia
                         component="img"
-                        height="650"
+                        height="550"
                         image={storeThumUrl || storeDefaultImg}
                         alt="storeThumbnail"
                     />
@@ -40,7 +42,14 @@ const StoreSelectTemplate = () => {
                     </CardContent>
                     <CardActions sx={{ justifyContent: 'center' }}>
                         <Button>
-                            <Typography variant="h5" align="center" gutterBottom>
+                            <Typography
+                                variant="h5"
+                                align="center"
+                                gutterBottom
+                                onClick={() => {
+                                    navigate(`/store/${storeId}`);
+                                }}
+                            >
                                 자세히 보기
                             </Typography>
                         </Button>

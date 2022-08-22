@@ -7,7 +7,7 @@ import { useFilterDispatch } from '../../contexts/filterContext';
 
 const MapContainer = ({ setCoords }) => {
     const style = {
-        width: 500,
+        width: '100%',
         height: 500,
     };
 
@@ -18,7 +18,7 @@ const MapContainer = ({ setCoords }) => {
 
     useEffect(() => {
         try {
-            const container = document.getElementById('kakaoMap');
+            const container = document.getElementById('currentLocationMap');
             const options = {
                 center: new kakao.maps.LatLng(latitude, longitude),
                 level: 3,
@@ -57,7 +57,7 @@ const MapContainer = ({ setCoords }) => {
         setCoords,
     ]);
 
-    return <div id="kakaoMap" style={style} />;
+    return <div id="currentLocationMap" style={style} />;
 };
 
 const LocationMapTemplate = () => {

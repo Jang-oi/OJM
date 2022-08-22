@@ -30,7 +30,6 @@ const MainPage = () => {
     const geoSuccessCallBack = useCallback(
         async (position) => {
             const localCoords = getLocalStorage('coords');
-            console.log(localCoords);
             coordsErrorHandler({ element: '', isLocationCheck: true });
             coordsDispatch({
                 type: 'SET_COORDS',

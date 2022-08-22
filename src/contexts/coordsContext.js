@@ -1,8 +1,10 @@
 import { createContext, useReducer, useContext } from 'react';
-import { setLocalStorage } from '../utils/localStorage';
+import { getLocalStorage, setLocalStorage } from "../utils/localStorage";
+
+const localCoords = getLocalStorage('coords');
 
 const initialState = {
-    coords: { latitude: 0, longitude: 0 },
+    coords: localCoords || { latitude: 0, longitude: 0 },
 };
 
 const coordsReducer = (state, action) => {

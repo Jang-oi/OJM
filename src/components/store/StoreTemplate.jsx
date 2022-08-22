@@ -82,6 +82,8 @@ const StoreList = () => {
         );
     }
 
+    console.log(store);
+
     return (
         <Fragment>
             {store.map(({ storeKey, storeThumUrl, storeCategory, storeName, storeId }) => (
