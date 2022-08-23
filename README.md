@@ -12,3 +12,4 @@
 * npm install @mui/material @emotion/react @mui/lab @emotion/styled
 * npm install react-icons
 * npm install --save-dev --save-exact prettier
+* npm install styled-components

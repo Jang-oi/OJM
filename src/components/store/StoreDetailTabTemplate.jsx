@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Box, Container, Tab } from '@mui/material';
-import axios from 'axios';
-import { useCoordsState } from '../contexts/coordsContext';
+import React, { useEffect, useState } from 'react';
+import { useCoordsState } from '../../contexts/coordsContext';
+import { Box, Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-const StoreDetailMapContainer = () => {
+const StoreDetailMapContainer = ({ storeCoords }) => {
     const style = {
         width: '100%',
         height: 500,
@@ -15,13 +13,14 @@ const StoreDetailMapContainer = () => {
 
     const coordsState = useCoordsState();
     const { latitude, longitude } = coordsState.coords;
+    const { storeLatitude, storeLongitude } = storeCoords;
 
     useEffect(() => {
         try {
             const container = document.getElementById('storeDetailMap'); // 지도를 표시할 div
             const options = {
                 center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
-                level: 3, // 지도의 확대 레벨
+                level: 4, // 지도의 확대 레벨
             };
 
             const map = new kakao.maps.Map(container, options); // 지도를 생성합니다
@@ -30,7 +29,7 @@ const StoreDetailMapContainer = () => {
             const positions = [
                 {
                     content: '<div style="padding:5px;">음식점 위치입니다.</div>',
-                    latlng: new kakao.maps.LatLng(37.6650793259781, 127.29215448138599),
+                    latlng: new kakao.maps.LatLng(storeLatitude, storeLongitude),
                 },
                 {
                     content: '<div style="padding:5px;">현재 위치입니다.</div>',
@@ -59,45 +58,32 @@ const StoreDetailMapContainer = () => {
     return <div id="storeDetailMap" style={style} />;
 };
 
-const StoreDetail = () => {
-    const { id } = useParams();
+const StoreDetailTabTemplate = ({ storeInfo }) => {
+    const [tabValue, setTabValue] = useState('1');
 
-    const [value, setValue] = useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleTabChange = (event, newValue) => {
+        setTabValue(newValue);
     };
 
-    const getStoreDetailData = useCallback(async () => {
-        const response = await axios.get(`test/ojm/detail?storeId=${id}`);
-        console.log(response);
-    }, [id]);
-
-    useEffect(() => {
-        getStoreDetailData();
-    }, [getStoreDetailData]);
-
+    const { storeCoords } = storeInfo;
     return (
-        <Container style={{ marginTop: 50 }}>
-            가게 이미지 슬라이드 형태
-            <Box sx={{ width: '100%', typography: 'body1' }}>
-                <TabContext value={value}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <TabList onChange={handleChange} aria-label="lab API tabs example">
-                            <Tab label="상세" value="1" />
-                            <Tab label="메뉴" value="2" />
-                            <Tab label="위치" value="3" />
-                        </TabList>
-                    </Box>
-                    <TabPanel value="1">Item One</TabPanel>
-                    <TabPanel value="2">Item Two</TabPanel>
-                    <TabPanel value="3">
-                        <StoreDetailMapContainer />
-                    </TabPanel>
-                </TabContext>
-            </Box>
-        </Container>
+        <Box sx={{ width: '100%', typography: 'body1' }}>
+            <TabContext value={tabValue}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <TabList onChange={handleTabChange}>
+                        <Tab label="상세" value="1" />
+                        <Tab label="메뉴" value="2" />
+                        <Tab label="위치" value="3" />
+                    </TabList>
+                </Box>
+                <TabPanel value="1">Item One</TabPanel>
+                <TabPanel value="2">Item Two</TabPanel>
+                <TabPanel value="3">
+                    <StoreDetailMapContainer storeCoords={storeCoords} />
+                </TabPanel>
+            </TabContext>
+        </Box>
     );
 };
 
-export default StoreDetail;
+export default StoreDetailTabTemplate;
