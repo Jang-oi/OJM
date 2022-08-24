@@ -18,7 +18,7 @@ const StoreSelectTemplate = () => {
     if (!isStoreDialog) return null;
     const selectStoreIndex = Math.floor(Math.random() * store.length);
 
-    const { storeThumUrl, storeTel, storeName, storeId, storeDistance, storeAddress } = store[selectStoreIndex];
+    const { storeThumUrl, storeName, storeId, storeDistance, storeAddress } = store[selectStoreIndex];
 
     return (
         <Dialog open={isStoreDialog} onClose={handleStoreDialogClose} fullWidth={true} maxWidth={'lg'}>
@@ -36,7 +36,6 @@ const StoreSelectTemplate = () => {
                         </Typography>
                         <Typography variant="h5" align="center" color="text.secondary">
                             주소 : {storeAddress} <br />
-                            가게 번호 : {storeTel} <br />
                             가게 거리 : {storeDistance}M <br />
                         </Typography>
                     </CardContent>
@@ -51,6 +50,18 @@ const StoreSelectTemplate = () => {
                                 }}
                             >
                                 자세히 보기
+                            </Typography>
+                        </Button>
+                        <Button>
+                            <Typography
+                              variant="h5"
+                              align="center"
+                              gutterBottom
+                              onClick={() => {
+                                  storeDispatch({ type: 'SET_STORE_DIALOG', isStoreDialog: true });
+                              }}
+                            >
+                                다시 고르기
                             </Typography>
                         </Button>
                     </CardActions>
