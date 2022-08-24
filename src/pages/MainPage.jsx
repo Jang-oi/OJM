@@ -7,15 +7,15 @@ const MainPage = () => {
     const coordsDispatch = useCoordsDispatch();
 
     const [locationState, setLocationState] = useState({
-        element: '',
         isLocationCheck: false,
+        alertOptions: { alertType: '', alertResult: '', alertText: '', callBackText: '', callBackFn: '' },
     });
 
     /**
-     * Geolocation API 가 정상적이지 않을 경우의 값 설정을 위한 함수
+     * Geolocation API 의 결과 값에 따라 제어하는 함수
      * @param obj
      */
-    const coordsErrorHandler = (obj) => {
+    const handleCoordsResult = (obj) => {
         setLocationState((pervObj) => {
             return {
                 ...pervObj,
@@ -30,7 +30,7 @@ const MainPage = () => {
     const geoSuccessCallBack = useCallback(
         async (position) => {
             const localCoords = getLocalStorage('coords');
-            coordsErrorHandler({ element: '', isLocationCheck: true });
+            handleCoordsResult({ isLocationCheck: true });
             coordsDispatch({
                 type: 'SET_COORDS',
                 coords: localCoords || position.coords,
@@ -46,14 +46,26 @@ const MainPage = () => {
     const geoErrCallBack = useCallback((error) => {
         switch (error.code) {
             case 1:
-                coordsErrorHandler({
-                    element: `위치 허용이 거부 되었습니다. 허용 후 새로고침 부탁드립니다.`,
+                handleCoordsResult({
+                    alertOptions: {
+                        alertType: 'action',
+                        alertResult: 'error',
+                        alertText: '위치 허용이 거부 되었습니다. 허용 후 새로고침 클릭 부탁드립니다.',
+                        callBackText: '새로고침',
+                        callBackFn: () => {
+                            window.location.reload();
+                        },
+                    },
                     isLocationCheck: false,
                 });
                 break;
             case 2:
-                coordsErrorHandler({
-                    element: '현재 위치정보를 찾을 수 없는 곳에 있어 서비스 이용이 불가합니다.',
+                handleCoordsResult({
+                    alertOptions: {
+                        alertType: 'basic',
+                        alertResult: 'error',
+                        alertText: '현재 위치정보를 찾을 수 없는 곳에 있어 서비스 이용이 불가합니다.',
+                    },
                     isLocationCheck: false,
                 });
                 break;
@@ -63,13 +75,21 @@ const MainPage = () => {
     }, []);
 
     useEffect(() => {
-        coordsErrorHandler({
-            element: '위치를 허용 해주세요.',
+        handleCoordsResult({
+            alertOptions: {
+                alertType: 'basic',
+                alertResult: 'info',
+                alertText: '위치를 허용 해주세요.',
+            },
             isLocationCheck: false,
         });
         if (!navigator.geolocation) {
-            coordsErrorHandler({
-                element: '사용자의 웹 브라우저의 버전이 낮아 서비스의 이용이 불가합니다.',
+            handleCoordsResult({
+                alertOptions: {
+                    alertType: 'basic',
+                    alertResult: 'info',
+                    alertText: '사용자의 웹 브라우저의 버전이 낮아 서비스의 이용이 불가합니다.',
+                },
                 isLocationCheck: false,
             });
         }

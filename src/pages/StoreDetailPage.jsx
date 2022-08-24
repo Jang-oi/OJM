@@ -31,8 +31,7 @@ const StoreDetailPage = () => {
         <Container style={{ marginTop: 50 }}>
             <StoreDetailCarousel storeImage={storeInfo.storeImage} />
             <Typography component="h3" variant="h3" align="center" color="text.primary" style={{ marginTop: '20px' }}>
-                {storeName} ({storeState ? '영업 중' : '영업 종료'})
-                영업 상태 디자인 고민...
+                {storeName} ({storeState ? '영업 중' : '영업 종료'}) 영업 상태 디자인 고민...
             </Typography>
             <StoreDetailTabTemplate storeInfo={storeInfo} />
         </Container>
