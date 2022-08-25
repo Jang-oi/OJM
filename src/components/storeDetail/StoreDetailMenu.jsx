@@ -27,8 +27,8 @@ const MenuItem = ({ menuKey, name, price, recommended }) => {
 
 const MenuListImage = ({ storeMenuImage }) => {
     const Img = styled.img`
-        min-width: 100%;
-        height: 500px;
+        width: 100%;
+        height: 100%;
         margin-top : 50px;
     `;
 

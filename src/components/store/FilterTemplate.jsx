@@ -7,21 +7,24 @@ import {
     Drawer,
     FormControl,
     Grid,
+    IconButton,
     InputLabel,
     List,
     ListItem,
     MenuItem,
     OutlinedInput,
     Select,
-    Slider,
-    Typography,
-} from '@mui/material';
+    Slider, Tooltip,
+    Typography
+} from "@mui/material";
 
 import { filterDistanceMarks, filterInitialState, storeCategoryList } from '../../utils/setting';
 import { useFilterDispatch, useFilterState } from '../../contexts/filterContext';
 import { useStoreDispatch, useStoreState } from '../../contexts/storeContext';
 import { filterApply } from '../../utils/common';
 import { MdDirectionsRun } from 'react-icons/md';
+import { FaFilter } from 'react-icons/fa';
+import { AiOutlineMenuUnfold } from 'react-icons/ai';
 
 const FilterTemplate = () => {
     const {
@@ -161,18 +164,20 @@ const FilterTemplate = () => {
     }, [distance, anchor, food, storeDispatch, storeState, toggleDrawer]);
 
     return (
-        <Container style={{ background: 'blue' }}>
-            <Button
-                style={{
-                    fontSize: 40,
-                    width: 200,
-                    float: { anchor },
-                    color: 'white',
-                }}
-                onClick={toggleDrawer(anchor, true)}
-            >
-                {'필터'}
-            </Button>
+        <Container>
+            <Tooltip title="필터" placement="left">
+                <IconButton
+                    size="large"
+                    color="inherit"
+                    aria-label="menu"
+                    style={{ top: '30%' }}
+                    onClick={toggleDrawer(anchor, true)}
+                >
+                    {/*<FaFilter />*/}
+                    <AiOutlineMenuUnfold />
+                    필터 버튼을 어떻게 직관적으로 ...
+                </IconButton>
+            </Tooltip>
             <Drawer anchor={anchor} open={anchorState[anchor]} onClose={toggleDrawer(anchor, false)}>
                 <Box sx={{ width: 400, marginTop: 30 }} role="presentation">
                     <List>

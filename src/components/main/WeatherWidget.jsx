@@ -1,18 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useCoordsState } from '../../contexts/coordsContext';
 import axios from 'axios';
-import {
-    TiWeatherSunny,
-    TiWeatherStormy,
-    TiWeatherCloudy,
-    TiWeatherShower,
-    TiWeatherDownpour,
-    TiWeatherSnow,
-} from 'react-icons/ti';
-import { BsCloudFog } from 'react-icons/bs';
 import { isEmptyObj } from '../../utils/common';
-import { Button, Container } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Button, Container, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 const WeatherWidget = () => {
     const [weather, setWeather] = useState({
@@ -52,22 +44,25 @@ const WeatherWidget = () => {
      * @returns {JSX.Element}
      */
     const selectIcon = () => {
+        const Img = styled.img`
+            max-height: 100px;
+        `;
         const iconId = weather.id === 800 ? 9 : (parseInt(weather.id) / 100).toFixed(0);
         switch (iconId) {
             case '9':
-                return <TiWeatherSunny size="3rem" color="red" />;
+                return <Img src="https://openweathermap.org/img/wn/01d@2x.png" alt={'Sunny'} />;
             case '2':
-                return <TiWeatherStormy size="3rem" color="black" />;
+                return <Img src="https://openweathermap.org/img/wn/11d@2x.png" alt={'Stormy'} />;
             case '3':
-                return <TiWeatherShower size="3rem" color="blue" />;
+                return <Img src="https://openweathermap.org/img/wn/09d@2x.png" alt={'Shower'} />;
             case '5':
-                return <TiWeatherDownpour size="3rem" color="blue" />;
+                return <Img src="https://openweathermap.org/img/wn/10d@2x.png" alt={'Downpour'} />;
             case '6':
-                return <TiWeatherSnow size="3rem" color="white" />;
+                return <Img src="https://openweathermap.org/img/wn/13d@2x.png" alt={'Snow'} />;
             case '7':
-                return <BsCloudFog size="3rem" color="gray" />;
+                return <Img src="https://openweathermap.org/img/wn/50d@2x.png" alt={'CloudFog'} />;
             case '8':
-                return <TiWeatherCloudy size="3rem" color="gray" />;
+                return <Img src="https://openweathermap.org/img/wn/04d@2x.png" alt={'Cloudy'} />;
             default:
                 break;
         }
@@ -95,12 +90,17 @@ const WeatherWidget = () => {
     }, [coords, getWeather, getAddress]);
 
     return (
-        <Container style={{ background: 'greenyellow' }}>
-            {weather.temperature}℃{selectIcon()}
-            {weather.main}
-            <p />
-            현재 위치 : {address}
-            <Button onClick={() => {navigate('/')}}>위치 변경</Button>
+        <Container>
+            <Typography gutterBottom variant="h6" component="div">
+                {address} {weather.temperature}℃{selectIcon()}
+            </Typography>
+            <Button
+                onClick={() => {
+                    navigate('/');
+                }}
+            >
+                위치 변경
+            </Button>
         </Container>
     );
 };
