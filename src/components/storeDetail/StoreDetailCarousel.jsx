@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { RiArrowDropLeftLine, RiArrowDropRightLine } from 'react-icons/ri';
 
@@ -43,34 +43,33 @@ const Button = styled.button`
 
 const StoreDetailCarousel = ({ storeImage }) => {
     const imageTotal = storeImage.length - 1;
-
     const [currentSlide, setCurrentSlide] = useState(0);
     const slideRef = useRef(null);
 
-    const handlePrevButton = () => {
+    const handlePrevButton = useCallback(() => {
         if (currentSlide === 0) setCurrentSlide(0);
         else setCurrentSlide(currentSlide - 1);
-    };
+    }, [currentSlide]);
 
-    const handleNextButton = () => {
+    const handleNextButton = useCallback(() => {
         // 더이상 넘어갈 슬라이드가 없을 때 초기화
         if (currentSlide >= imageTotal) setCurrentSlide(0);
         else setCurrentSlide(currentSlide + 1);
-    };
+    }, [currentSlide, imageTotal]);
 
     useEffect(() => {
-        if (currentSlide >= imageTotal) setCurrentSlide(0);
+        if (currentSlide > imageTotal) setCurrentSlide(0);
 
         slideRef.current.style.transition = 'all 0.5s ease-in-out';
         slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
     }, [imageTotal, currentSlide]);
 
     useEffect(() => {
-        setInterval(() => {
+/*        setInterval(() => {
             setCurrentSlide((prevValue) => {
                 return prevValue + 1;
             });
-        }, 2000);
+        }, 2000);*/
     }, []);
 
     return (

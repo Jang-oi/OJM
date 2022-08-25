@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useCoordsDispatch } from '../contexts/coordsContext';
-import LocationTemplate from '../components/location/LocationTemplate';
+import LocationTemplate from '../components/main/LocationTemplate';
 import { getLocalStorage } from '../utils/localStorage';
 
 const MainPage = () => {

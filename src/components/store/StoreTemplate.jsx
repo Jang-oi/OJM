@@ -16,9 +16,7 @@ import { useNavigate } from 'react-router-dom';
  * @constructor
  */
 const StoreItem = ({ storeKey, ThumUrl, name, category, storeId }) => {
-
     const navigate = useNavigate();
-
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={storeKey}>
             <Card sx={{ maxWidth: 300 }}>
@@ -32,7 +30,14 @@ const StoreItem = ({ storeKey, ThumUrl, name, category, storeId }) => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" onClick={() => {navigate(`/store/${storeId}`)}}>자세히 보기</Button>
+                    <Button
+                        size="small"
+                        onClick={() => {
+                            navigate(`/store/${storeId}`);
+                        }}
+                    >
+                        자세히 보기
+                    </Button>
                 </CardActions>
             </Card>
         </Grid>
@@ -87,6 +92,7 @@ const StoreList = () => {
             {store.map(({ storeKey, storeThumUrl, storeCategory, storeName, storeId }) => (
                 <StoreItem
                     key={storeKey}
+                    storeKey={storeKey}
                     storeId={storeId}
                     ThumUrl={storeThumUrl}
                     category={storeCategory}

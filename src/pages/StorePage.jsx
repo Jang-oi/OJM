@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Container } from '@mui/material';
-import WeatherWidget from '../components/weather/WeatherWidget';
+import WeatherWidget from '../components/main/WeatherWidget';
 import FilterTemplate from '../components/store/FilterTemplate';
 import { useCoordsDispatch, useCoordsState } from '../contexts/coordsContext';
 import { useNavigate } from 'react-router-dom';
