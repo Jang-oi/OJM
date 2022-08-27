@@ -14,17 +14,19 @@ import {
     MenuItem,
     OutlinedInput,
     Select,
-    Slider, Tooltip,
-    Typography
-} from "@mui/material";
+    Slider,
+    Tooltip,
+    Typography,
+} from '@mui/material';
 
 import { filterDistanceMarks, filterInitialState, storeCategoryList } from '../../utils/setting';
 import { useFilterDispatch, useFilterState } from '../../contexts/filterContext';
 import { useStoreDispatch, useStoreState } from '../../contexts/storeContext';
 import { filterApply } from '../../utils/common';
 import { MdDirectionsRun } from 'react-icons/md';
-import { FaFilter } from 'react-icons/fa';
-import { AiOutlineMenuUnfold } from 'react-icons/ai';
+// import { FaFilter } from 'react-icons/fa';
+// import { AiOutlineMenuUnfold } from 'react-icons/ai';
+import { BiCategory } from 'react-icons/bi';
 
 const FilterTemplate = () => {
     const {
@@ -174,8 +176,9 @@ const FilterTemplate = () => {
                     onClick={toggleDrawer(anchor, true)}
                 >
                     {/*<FaFilter />*/}
-                    <AiOutlineMenuUnfold />
-                    필터 버튼을 어떻게 직관적으로 ...
+                    {/*<AiOutlineMenuUnfold />*/}
+                    <BiCategory />
+                    음식점 카테고리 (디자인 고민 ... )
                 </IconButton>
             </Tooltip>
             <Drawer anchor={anchor} open={anchorState[anchor]} onClose={toggleDrawer(anchor, false)}>
@@ -184,8 +187,10 @@ const FilterTemplate = () => {
                         <ListItem>{FoodMultiSelect()}</ListItem>
                         <ListItem>{DistanceSlider()}</ListItem>
                     </List>
-                    <Button onClick={onApply}>적용</Button>
-                    <Button onClick={toggleDrawer(anchor, false)}>취소</Button>
+                    <div style={{ textAlign: 'center' }}>
+                        <Button onClick={onApply}>적용</Button>
+                        <Button onClick={toggleDrawer(anchor, false)}>취소</Button>
+                    </div>
                 </Box>
             </Drawer>
         </Container>

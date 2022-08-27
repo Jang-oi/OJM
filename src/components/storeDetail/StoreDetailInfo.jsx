@@ -10,7 +10,7 @@ const StoreDetailInfo = ({ storeInfo }) => {
     const storeBizHourInfoArr = storeBizHourInfo ? storeBizHourInfo.split('|') : [emptyMessage];
     const storeOptionsArr = storeOptions
         ? storeOptions.map((optionObj) => {
-              return optionObj.name;
+              return optionObj.name + ' ';
           })
         : [emptyMessage];
     return (

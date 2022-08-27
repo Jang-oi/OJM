@@ -3,6 +3,12 @@ import { Card, CardContent, Grid, Typography } from '@mui/material';
 import styled from 'styled-components';
 import { MdRecommend } from 'react-icons/md';
 
+const Img = styled.img`
+    width: 100%;
+    height: 100%;
+    margin-top: 50px;
+`;
+
 const MenuItem = ({ menuKey, name, price, recommended }) => {
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={menuKey}>
@@ -26,16 +32,10 @@ const MenuItem = ({ menuKey, name, price, recommended }) => {
 };
 
 const MenuListImage = ({ storeMenuImage }) => {
-    const Img = styled.img`
-        width: 100%;
-        height: 100%;
-        margin-top : 50px;
-    `;
-
     return (
         <Fragment>
-            {storeMenuImage.map(({ imageUrl }) => {
-                return <Img src={imageUrl} />;
+            {storeMenuImage.map(({ imageUrl }, index) => {
+                return <Img src={imageUrl} key={index} />;
             })}
         </Fragment>
     );

@@ -6,11 +6,14 @@ import { Button, Container, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+const Img = styled.img`
+    max-height: 60px;
+`;
+
 const WeatherWidget = () => {
     const [weather, setWeather] = useState({
         id: 0,
         temperature: 0,
-        main: '',
     });
     const [address, setAddress] = useState('');
 
@@ -32,7 +35,6 @@ const WeatherWidget = () => {
             setWeather({
                 id: data.weather[0].id,
                 temperature: (data.main.temp - 273.15).toFixed(2),
-                main: data.weather[0].description,
             });
         } catch (e) {
             alert(e);
@@ -44,9 +46,6 @@ const WeatherWidget = () => {
      * @returns {JSX.Element}
      */
     const selectIcon = () => {
-        const Img = styled.img`
-            max-height: 100px;
-        `;
         const iconId = weather.id === 800 ? 9 : (parseInt(weather.id) / 100).toFixed(0);
         switch (iconId) {
             case '9':
@@ -91,16 +90,19 @@ const WeatherWidget = () => {
 
     return (
         <Container>
-            <Typography gutterBottom variant="h6" component="div">
-                {address} {weather.temperature}℃{selectIcon()}
-            </Typography>
-            <Button
-                onClick={() => {
-                    navigate('/');
-                }}
-            >
-                위치 변경
-            </Button>
+            <div style={{ display: 'flex'}}>
+                <Typography gutterBottom variant="h6" component="div">
+                    {address}
+                    <Button
+                        onClick={() => {
+                            navigate('/');
+                        }}
+                    >
+                        위치 변경
+                    </Button>
+                    {weather.temperature}℃{selectIcon()}
+                </Typography>
+            </div>
         </Container>
     );
 };

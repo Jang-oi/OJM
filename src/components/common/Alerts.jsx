@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Snackbar } from '@mui/material';
-import { Alert } from '@mui/lab';
+import { Alert } from '@mui/material';
 
 const Alerts = ({ alertOptions }) => {
     const { alertType, alertResult, alertText, callBackFn, callBackText } = alertOptions;

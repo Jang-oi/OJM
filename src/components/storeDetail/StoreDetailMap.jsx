@@ -27,7 +27,7 @@ const StoreDetailMap = ({ storeCoords }) => {
       const positions = [
         {
           content: '<div style="padding:5px;">음식점 위치입니다.</div>',
-          latlng: new kakao.maps.LatLng(storeLatitude, storeLongitude),
+          latlng: new kakao.maps.LatLng(storeLongitude, storeLatitude),
         },
         {
           content: '<div style="padding:5px;">현재 위치입니다.</div>',
