@@ -178,7 +178,7 @@ const FilterTemplate = () => {
                     {/*<FaFilter />*/}
                     {/*<AiOutlineMenuUnfold />*/}
                     <BiCategory />
-                    음식점 카테고리 (디자인 고민 ... )
+                    필터
                 </IconButton>
             </Tooltip>
             <Drawer anchor={anchor} open={anchorState[anchor]} onClose={toggleDrawer(anchor, false)}>

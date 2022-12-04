@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import StorePage from './pages/StorePage';
@@ -9,7 +8,7 @@ import { StoreProvider } from './contexts/storeContext';
 import { FilterProvider } from './contexts/filterContext';
 
 const App = () => {
-    axios.defaults.baseURL = process.env.REACT_APP_BACK_URL;
+    // axios.defaults.baseURL = process.env.REACT_APP_BACK_URL;
 
     return (
         <CoordsProvider>
